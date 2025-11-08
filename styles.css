@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Font family is now set in the body */
 }
 
 body {
@@ -32,6 +33,8 @@ body {
     border-radius: 8px;
 }
 
+/* --- ANIMATION CHANGES START --- */
+
 /* Individual Page Styles */
 .page {
     position: absolute;
@@ -41,15 +44,33 @@ body {
     height: 100%;
     padding: 20px;
     background-color: white;
-    display: none;
+    display: flex; /* Use flex for layout */
     flex-direction: column;
     z-index: 1;
+    
+    /* Start hidden and slightly down */
+    opacity: 0;
+    transform: translateY(15px);
+    
+    /* Add the transition */
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    
+    /* Prevent interaction when hidden */
+    pointer-events: none;
 }
 
 .page.active {
-    display: flex;
+    /* Become visible and move to final position */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto; /* Allow interaction */
     z-index: 2;
+    
+    /* display: flex is already inherited */
 }
+
+/* --- ANIMATION CHANGES END --- */
+
 
 /* Header and Navigation */
 header {
@@ -59,7 +80,7 @@ header {
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
     margin-bottom: 20px;
-    flex-shrink: 0;
+    flex-shrink: 0; /* Prevents header from shrinking */
 }
 
 .page-title {
@@ -85,11 +106,11 @@ header {
 
 /* Main Content Layout */
 main {
-    flex-grow: 1; 
-    display: flex;
+    flex-grow: 1; /* Takes up remaining vertical space */
+    display: flex; /* Use flex for column layout */
     flex-direction: column;
     position: relative;
-    overflow: hidden; 
+    overflow: hidden; /* Contains the content wrapper */
 }
 
 /* Full-width H1 - Set to Inter Semi-Bold (600) */
@@ -104,9 +125,9 @@ main h1 {
 /* Wrapper for the 50/50 split */
 .content-wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: row; /* Horizontal layout */
     width: 100%;
-    flex-grow: 1;
+    flex-grow: 1; /* Takes up remaining space in main */
     overflow: hidden;
 }
 
@@ -114,7 +135,7 @@ main h1 {
 .text-half {
     width: 50%; 
     padding-right: 20px; 
-    overflow-y: auto; /* Allows scrolling */
+    overflow-y: auto; /* Allow scrolling */
 }
 
 /* Description paragraphs use body default: Inter Regular, #6D6D6D */
@@ -239,4 +260,28 @@ strong {
     font-style: italic;
     color: #666;
     z-index: 10;
+}
+
+/* --- NEW ANIMATION KEYFRAMES --- */
+
+/* Add a subtle "stagger" animation for the content */
+.page.active h1 {
+    /* animation: name duration timing-function delay fill-mode */
+    animation: contentFadeIn 0.4s ease-out 0.2s backwards;
+}
+
+.page.active .content-wrapper {
+    animation: contentFadeIn 0.4s ease-out 0.3s backwards;
+}
+
+/* Define the keyframe */
+@keyframes contentFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
