@@ -1,0 +1,242 @@
+/* Basic Reset and Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Set Inter Regular (400) and #6D6D6D as default */
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #6D6D6D;
+    
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased; /* Smoother text */
+}
+
+/* Page Container */
+#pages-container {
+    position: relative;
+    width: 90%;
+    max-width: 800px; 
+    height: 90vh;
+    max-height: 800px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+/* Individual Page Styles */
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background-color: white;
+    display: none;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.page.active {
+    display: flex;
+    z-index: 2;
+}
+
+/* Header and Navigation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.page-title {
+    font-size: 1.1em;
+    color: #888;
+    font-weight: 400; /* Inter Regular */
+}
+
+.nav-button.home {
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600; /* Inter Semi-Bold */
+    transition: background-color 0.2s;
+}
+
+.nav-button.home:hover {
+    background-color: #e0e0e0;
+}
+
+/* Main Content Layout */
+main {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden; 
+}
+
+/* Full-width H1 - Set to Inter Semi-Bold (600) */
+main h1 {
+    font-size: 2.5em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+    color: #000; /* Main headings should be dark */
+}
+
+/* Wrapper for the 50/50 split */
+.content-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* The Text/Details Half */
+.text-half {
+    width: 50%; 
+    padding-right: 20px; 
+    overflow-y: auto; /* Allows scrolling */
+}
+
+/* Description paragraphs use body default: Inter Regular, #6D6D6D */
+.text-half p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.character-details {
+    margin-top: 15px;
+}
+
+/* Set all <strong> tags to Inter Semi-Bold (600) */
+strong {
+    font-weight: 600;
+    color: #333; /* Slightly darker than description text */
+}
+
+.character-details ul {
+    list-style: none;
+    margin-top: 10px;
+    padding-left: 0;
+}
+
+.character-details ul ul {
+    padding-left: 20px;
+    margin-top: 8px;
+}
+
+/* List items use body default: Inter Regular, #6D6D6D */
+.character-details li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* The Image Half */
+.image-half {
+    width: 50%; 
+    display: flex;
+    justify-content: flex-end; 
+    align-items: flex-end;
+}
+
+.character-image {
+    position: static; 
+    max-height: 100%; 
+    max-width: 100%; 
+    object-fit: contain;
+}
+
+/* --- Special Styles for Home Page --- */
+
+#griffin-family main {
+    justify-content: center;
+    align-items: center;
+}
+
+/* Set Home Page H1 to Inter Bold (700) */
+#griffin-family main h1 {
+    font-weight: 700;
+    text-align: center;
+}
+
+#griffin-family .content-wrapper {
+    height: auto;
+    flex-grow: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.family-image {
+    position: static;
+    max-height: 60vh; 
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+#griffin-family .text-half { 
+    display: none; 
+}
+#griffin-family .image-half { 
+    width: 100%; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+/* --- Navigation Arrow and End Text --- */
+.nav-arrow {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s, transform 0.2s;
+    z-index: 10;
+}
+
+.nav-arrow:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.nav-arrow span {
+    display: block;
+    transform: translateX(2px);
+}
+
+.end-text {
+    position: absolute;
+    bottom: 35px;
+    right: 90px;
+    font-style: italic;
+    color: #666;
+    z-index: 10;
+}

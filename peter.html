@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peter</title>
+    <style>
+        .title
+        {
+            width: fit-content;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+        }
+        .img img {
+            width: 200px;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            background-color: #bcbcbc;
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        .title,img img{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .container
+        {
+            display: flex;
+            align-items: center; /* vertically align if needed */
+            gap: 20px;
+            margin: 20px auto;
+            justify-content: center;
+
+        }
+
+        .description
+        {
+            font-size: 0.8em;
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: #2E2E2E;
+            font-weight: 400px;
+        }
+
+        /* Medium desktops and laptops */
+            @media only screen and (min-width: 992px) {
+
+                .container
+                {
+                    display: flex;
+                    flex-direction: row;
+                }
+                .img img
+                {
+                    width: 50%;
+                    height: 90%;
+                }
+
+
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/OdsERvQL8wwbaAmjFd9Obi/Untitled?node-id=0-1&embed-host=share" allowfullscreen></iframe>
+
+        <div class="title"><h1>Peter Griffin</h1></div>
+        <div class="img"><img src = "img/peter.png" alt="peter griffin"></div>
+        
+    </div>
+    <div class="description"><p></p>Peter Griffin is basically what happens when a dad, a toddler, and a wrecking ball get fused into one person. He’s the kind of guy who’ll try to fix the TV by punching it, then blame the dog when it explodes. Lives in Quahog, works at a brewery, and somehow survives weekly fistfights with a giant chicken.
+    He’s loud, clueless, and wildly inappropriate—but also weirdly lovable. Think of him as your drunk uncle who means well but accidentally sets the grill on fire every family reunion.
+</div>
+</body>
+</html>
