@@ -285,3 +285,72 @@ strong {
         transform: translateY(0);
     }
 }
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+
+/* This target a typical mobile phone (max-width: 600px) */
+@media (max-width: 600px) {
+    
+    /* Make the main container use more screen space */
+    #pages-container {
+        width: 100%;
+        height: 100vh;
+        max-height: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    /* Reduce main heading size for phones */
+    main h1 {
+        font-size: 2em;
+    }
+
+    /* This is the most important part:
+    Change the 50/50 split to a vertical stack 
+    */
+    .content-wrapper {
+        flex-direction: column; /* Stack vertically */
+        height: auto; /* Let it grow as needed */
+        flex-grow: 1;
+    }
+
+    /* Make both text and image halves take full width */
+    .text-half,
+    .image-half {
+        width: 100%;
+    }
+
+    /* Give the text half a little space at the bottom */
+    .text-half {
+        padding-right: 0;
+        padding-bottom: 20px;
+        order: 1; /* Ensure text comes first */
+        overflow-y: auto; /* Allow text to scroll if it's long */
+        flex-grow: 1; /* Allow text to take up space */
+    }
+
+    /* Center the image and control its height */
+    .image-half {
+        order: 2; /* Ensure image comes second */
+        justify-content: center; /* Center horizontally */
+        align-items: flex-start; /* Align to the top of its box */
+        flex-grow: 0;
+        flex-shrink: 0; /* Don't let it shrink */
+    }
+    
+    .character-image {
+        max-height: 40vh; /* Limit image height */
+    }
+
+    /* Make the navigation arrow slightly smaller */
+    .nav-arrow {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+
+    /* Hide the "The end" text to save space */
+    .end-text {
+        display: none;
+    }
+}
