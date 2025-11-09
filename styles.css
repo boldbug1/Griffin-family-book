@@ -6,6 +6,10 @@
     /* Font family is now set in the body */
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     /* Set Inter Regular (400) and #6D6D6D as default */
     font-family: 'Inter', sans-serif;
@@ -18,6 +22,8 @@ body {
     align-items: center;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased; /* Smoother text */
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease;
 }
 
 /* Page Container */
@@ -27,10 +33,15 @@ body {
     max-width: 800px; 
     height: 90vh;
     max-height: 800px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     background-color: white;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 12px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+#pages-container:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
 /* --- ANIMATION CHANGES START --- */
@@ -50,19 +61,23 @@ body {
     
     /* Start hidden and slightly down */
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(20px) scale(0.98);
     
-    /* Add the transition */
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    /* Add smooth transitions with better easing */
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     
     /* Prevent interaction when hidden */
     pointer-events: none;
+    
+    /* Optimize for animations */
+    will-change: opacity, transform;
 }
 
 .page.active {
     /* Become visible and move to final position */
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     pointer-events: auto; /* Allow interaction */
     z-index: 2;
     
@@ -81,12 +96,23 @@ header {
     border-bottom: 1px solid #eee;
     margin-bottom: 20px;
     flex-shrink: 0; /* Prevents header from shrinking */
+    transition: border-color 0.3s ease;
 }
 
 .page-title {
     font-size: 1.1em;
     color: #888;
     font-weight: 400; /* Inter Regular */
+    transition: color 0.3s ease;
+    opacity: 0;
+    transform: translateY(-5px);
+}
+
+.page.active .page-title {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
 }
 
 .nav-button.home {
@@ -94,14 +120,46 @@ header {
     color: #333;
     border: none;
     padding: 8px 15px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: 600; /* Inter Semi-Bold */
-    transition: background-color 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-button.home::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
 }
 
 .nav-button.home:hover {
     background-color: #e0e0e0;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button.home:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.nav-button.home:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button.home:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
 }
 
 /* Main Content Layout */
@@ -136,12 +194,35 @@ main h1 {
     width: 50%; 
     padding-right: 20px; 
     overflow-y: auto; /* Allow scrolling */
+    scroll-behavior: smooth;
+    /* Custom scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.text-half::-webkit-scrollbar {
+    width: 6px;
+}
+
+.text-half::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.text-half::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.text-half::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.35);
 }
 
 /* Description paragraphs use body default: Inter Regular, #6D6D6D */
 .text-half p {
     margin-bottom: 15px;
     line-height: 1.6;
+    transition: color 0.3s ease;
 }
 
 .character-details {
@@ -169,21 +250,192 @@ strong {
 .character-details li {
     margin-bottom: 8px;
     line-height: 1.5;
+    transition: transform 0.2s ease, padding-left 0.2s ease;
+}
+
+.character-details li:hover {
+    transform: translateX(3px);
+    padding-left: 3px;
 }
 
 /* The Image Half */
 .image-half {
     width: 50%; 
     display: flex;
-    justify-content: flex-end; 
+    flex-direction: column;
+    justify-content: flex-start; 
     align-items: flex-end;
+    gap: 15px;
 }
 
 .character-image {
     position: static; 
-    max-height: 100%; 
+    max-height: 55%; 
     max-width: 100%; 
     object-fit: contain;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s,
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    flex-shrink: 0;
+}
+
+.page.active .character-image {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Comments Section */
+.comments-section {
+    width: 100%;
+    max-width: 100%;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s,
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+    border: 1px solid #eee;
+    max-height: 40%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.page.active .comments-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.comments-title {
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.comments-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    padding-right: 5px;
+}
+
+.comments-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.comments-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.comments-list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+}
+
+.comments-list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.comment {
+    margin-bottom: 12px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 6px;
+    border-left: 3px solid #007bff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comment:hover {
+    transform: translateX(2px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.comment.bot-comment {
+    border-left-color: #28a745;
+}
+
+.comment-author {
+    font-weight: 600;
+    font-size: 0.85em;
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.comment.bot-comment .comment-author {
+    color: #28a745;
+}
+
+.comment-text {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.comment-form {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.comment-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.comment-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.comment-input::placeholder {
+    color: #999;
+}
+
+.comment-submit {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.comment-submit:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.comment-submit:active {
+    transform: translateY(0);
+}
+
+.comment-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
 }
 
 /* --- Special Styles for Home Page --- */
@@ -211,6 +463,16 @@ strong {
     max-height: 60vh; 
     max-width: 100%;
     margin-top: 20px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s,
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+}
+
+.page.active .family-image {
+    opacity: 1;
+    transform: scale(1);
 }
 
 #griffin-family .text-half { 
@@ -238,19 +500,56 @@ strong {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
+    overflow: hidden;
+}
+
+.nav-arrow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
 }
 
 .nav-arrow:hover {
     background-color: #0056b3;
-    transform: scale(1.05);
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+}
+
+.nav-arrow:hover::before {
+    width: 100px;
+    height: 100px;
+}
+
+.nav-arrow:active {
+    transform: scale(1.05) translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3);
+}
+
+.nav-arrow:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 3px;
 }
 
 .nav-arrow span {
     display: block;
     transform: translateX(2px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+}
+
+.nav-arrow:hover span {
+    transform: translateX(4px);
 }
 
 .end-text {
@@ -260,6 +559,15 @@ strong {
     font-style: italic;
     color: #666;
     z-index: 10;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s,
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+.page.active .end-text {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* --- NEW ANIMATION KEYFRAMES --- */
@@ -267,18 +575,18 @@ strong {
 /* Add a subtle "stagger" animation for the content */
 .page.active h1 {
     /* animation: name duration timing-function delay fill-mode */
-    animation: contentFadeIn 0.4s ease-out 0.2s backwards;
+    animation: contentFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s backwards;
 }
 
 .page.active .content-wrapper {
-    animation: contentFadeIn 0.4s ease-out 0.3s backwards;
+    animation: contentFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
 }
 
 /* Define the keyframe */
 @keyframes contentFadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(15px);
     }
     to {
         opacity: 1;
@@ -332,14 +640,27 @@ strong {
     /* Center the image and control its height */
     .image-half {
         order: 2; /* Ensure image comes second */
-        justify-content: center; /* Center horizontally */
-        align-items: flex-start; /* Align to the top of its box */
+        justify-content: flex-start; /* Align to top */
+        align-items: center; /* Center horizontally */
         flex-grow: 0;
         flex-shrink: 0; /* Don't let it shrink */
     }
     
     .character-image {
-        max-height: 40vh; /* Limit image height */
+        max-height: 30vh; /* Limit image height to make room for comments */
+    }
+
+    .comments-section {
+        max-height: 35vh;
+        margin-top: 15px;
+    }
+
+    .comment-form {
+        flex-direction: column;
+    }
+
+    .comment-submit {
+        width: 100%;
     }
 
     /* Make the navigation arrow slightly smaller */

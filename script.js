@@ -138,6 +138,79 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- 4. COMMENT FUNCTIONALITY ---
+
+    // Function to create a new comment element
+    function createCommentElement(author, text, isBot = false) {
+        const commentDiv = document.createElement('div');
+        commentDiv.className = `comment ${isBot ? 'bot-comment' : ''}`;
+        
+        const authorDiv = document.createElement('div');
+        authorDiv.className = 'comment-author';
+        authorDiv.textContent = author;
+        
+        const textDiv = document.createElement('div');
+        textDiv.className = 'comment-text';
+        textDiv.textContent = text;
+        
+        commentDiv.appendChild(authorDiv);
+        commentDiv.appendChild(textDiv);
+        
+        // Add animation
+        commentDiv.style.opacity = '0';
+        commentDiv.style.transform = 'translateY(10px)';
+        
+        return commentDiv;
+    }
+
+    // Function to add a comment to a comments list
+    function addComment(commentsList, author, text, isBot = false) {
+        const commentElement = createCommentElement(author, text, isBot);
+        commentsList.appendChild(commentElement);
+        
+        // Animate in
+        setTimeout(() => {
+            commentElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            commentElement.style.opacity = '1';
+            commentElement.style.transform = 'translateY(0)';
+        }, 10);
+        
+        // Scroll to bottom of comments list
+        setTimeout(() => {
+            commentsList.scrollTop = commentsList.scrollHeight;
+        }, 50);
+    }
+
+    // Handle comment form submissions
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('comment-submit')) {
+            const form = e.target.closest('.comment-form');
+            const input = form.querySelector('.comment-input');
+            const commentsList = form.previousElementSibling;
+            const commentText = input.value.trim();
+            
+            if (commentText) {
+                // Generate a random username for user comments
+                const usernames = ['GriffinFan', 'QuahogResident', 'FamilyGuyWatcher', 'CharacterLover', 'ShowFan', 'GriffinEnthusiast'];
+                const randomUsername = usernames[Math.floor(Math.random() * usernames.length)] + Math.floor(Math.random() * 1000);
+                
+                addComment(commentsList, randomUsername, commentText, false);
+                input.value = '';
+                input.focus();
+            }
+        }
+    });
+
+    // Allow Enter key to submit comments
+    document.addEventListener('keydown', (e) => {
+        if (e.target.classList.contains('comment-input') && e.key === 'Enter') {
+            e.preventDefault();
+            const form = e.target.closest('.comment-form');
+            const submitButton = form.querySelector('.comment-submit');
+            submitButton.click();
+        }
+    });
+
     // --- INITIALIZATION ---
     
     // Set the initial active page (Griffin Family)
