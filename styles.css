@@ -6,6 +6,126 @@
     /* Font family is now set in the body */
 }
 
+/* Login Modal */
+.login-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.login-modal.hidden {
+    display: none;
+}
+
+.login-modal-content {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.login-modal-content h2 {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 0.95em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    min-height: 20px;
+    text-align: center;
+}
+
+.login-submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.login-submit-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.login-submit-btn:active {
+    transform: translateY(0);
+}
+
+.login-submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -379,6 +499,14 @@ strong {
     color: #555;
     line-height: 1.4;
     word-wrap: break-word;
+    margin-bottom: 5px;
+}
+
+.comment-timestamp {
+    font-size: 0.75em;
+    color: #999;
+    font-style: italic;
+    margin-top: 5px;
 }
 
 .comment-form {
